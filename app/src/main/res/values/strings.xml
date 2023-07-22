@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Extended Screen</string>
     <string name="action_settings">Settings</string>
-    <string name="main_fragment_label">Main Fragment</string>
+    <string name="open_overlay">Open Overlay</string>
     <string name="close_overlay">Close Overlay</string>
     <string name="toggle_auto_scroll">Toggle Auto Scroll</string>
+    <string name="main_fragment_label">Main Fragment</string>
     <string name="main_content">
         This app allows you to scroll content by moving your device around as if the device was
         a window to a hidden plane of content.\n\n\n

@@ -7,8 +7,8 @@ import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageButton
 
 class OverlayService : Service() {
     private lateinit var overlayView: View
@@ -35,8 +35,8 @@ class OverlayService : Service() {
         windowManager.addView(overlayView, params)
 
         // Set up button click listeners
-        val btnToggleAutoScroll = overlayView.findViewById<Button>(R.id.btnToggleAutoScroll)
-        val btnCloseOverlay = overlayView.findViewById<Button>(R.id.btnCloseOverlay)
+        val btnToggleAutoScroll = overlayView.findViewById<ImageButton>(R.id.btnToggleAutoScroll)
+        val btnCloseOverlay = overlayView.findViewById<ImageButton>(R.id.btnCloseOverlay)
 
         btnToggleAutoScroll.setOnClickListener { _ ->
             // Handle the action to toggle auto scrolling

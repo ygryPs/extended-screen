@@ -5,16 +5,18 @@
     android:padding="16dp">
 
     <!-- Add your UI elements here, e.g., two buttons -->
-    <Button
+    <ImageButton
         android:id="@+id/btnToggleAutoScroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/toggle_auto_scroll" />
+        android:contentDescription="@string/toggle_auto_scroll"
+        android:src="@android:drawable/ic_media_pause" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnCloseOverlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnToggleAutoScroll"
-        android:text="@string/close_overlay" />
+        android:contentDescription="@string/close_overlay"
+        android:src="@android:drawable/ic_delete" />
 </RelativeLayout>
