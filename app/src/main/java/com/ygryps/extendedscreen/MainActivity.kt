@@ -1,15 +1,18 @@
 package com.ygryps.extendedscreen
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.ygryps.extendedscreen.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,9 +33,15 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab).setAction("Action", null).show()
+        binding.fab.setOnClickListener { _ ->
+            // Start the overlay service when the button is clicked
+            if (!Settings.canDrawOverlays(this)) {
+                // Request the "draw over other apps" permission if not granted
+                requestOverlayPermission()
+            } else {
+                // Permission granted, start the overlay service
+                startOverlayService()
+            }
         }
     }
 
@@ -55,5 +64,26 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private val overlayPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (Settings.canDrawOverlays(this)) {
+            // Permission granted, start the overlay service
+            startOverlayService()
+        } else {
+            // Permission not granted, handle as needed (e.g., show a message)
+        }
+    }
+
+    private fun requestOverlayPermission() {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+        intent.data = Uri.parse("package:${packageName}")
+        overlayPermissionLauncher.launch(intent)
+    }
+
+    private fun startOverlayService() {
+        startService(Intent(this, OverlayService::class.java))
     }
 }
