@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { _ ->
+        binding.fab.setOnClickListener {
             // Start the overlay service when the button is clicked
             if (!Settings.canDrawOverlays(this)) {
                 // Request the "draw over other apps" permission if not granted
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     private val overlayPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { result ->
+    ) {
         if (Settings.canDrawOverlays(this)) {
             // Permission granted, start the overlay service
             startOverlayService()

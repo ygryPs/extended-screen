@@ -5,10 +5,12 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.IBinder
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import kotlin.math.abs
 
 class OverlayService : Service() {
     private lateinit var overlayView: View
@@ -34,16 +36,59 @@ class OverlayService : Service() {
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         windowManager.addView(overlayView, params)
 
+        val touchListener = object : View.OnTouchListener {
+            private var offsetX: Float = 0f
+            private var offsetY: Float = 0f
+            private var initialTouchX: Float = 0f
+            private var initialTouchY: Float = 0f
+
+            override fun onTouch(view: View, event: MotionEvent): Boolean {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        // Save the initial touch position
+                        initialTouchX = event.rawX
+                        initialTouchY = event.rawY
+                        offsetX = params.x - event.rawX
+                        offsetY = params.y - event.rawY
+                    }
+
+                    MotionEvent.ACTION_MOVE -> {
+                        // Calculate the new position of the overlay based on the touch movement
+                        params.x = (event.rawX + offsetX).toInt()
+                        params.y = (event.rawY + offsetY).toInt()
+
+                        // Update the overlay position
+                        windowManager.updateViewLayout(overlayView, params)
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        // Check if the touch event was a click
+                        if (abs(event.rawX - initialTouchX) < 10 && abs(event.rawY - initialTouchY) < 10) {
+                            // Perform click action here if needed
+                            view.performClick()
+                        }
+                    }
+                }
+                return true
+            }
+        }
+
+        // Set up touch listener to make the overlay draggable
+        overlayView.setOnTouchListener(touchListener)
+
         // Set up button click listeners
         val btnToggleAutoScroll = overlayView.findViewById<ImageButton>(R.id.btnToggleAutoScroll)
         val btnCloseOverlay = overlayView.findViewById<ImageButton>(R.id.btnCloseOverlay)
 
-        btnToggleAutoScroll.setOnClickListener { _ ->
+        btnToggleAutoScroll.setOnTouchListener(touchListener)
+        btnCloseOverlay.setOnTouchListener(touchListener)
+
+        btnToggleAutoScroll.setOnClickListener {
             // Handle the action to toggle auto scrolling
             // Implement this functionality later
         }
 
-        btnCloseOverlay.setOnClickListener { _ ->
+        btnCloseOverlay.setOnClickListener {
             // Close the overlay and stop the service
             stopSelf()
         }
