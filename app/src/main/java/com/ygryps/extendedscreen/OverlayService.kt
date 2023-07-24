@@ -37,10 +37,12 @@ class OverlayService : Service() {
         windowManager.addView(overlayView, params)
 
         val touchListener = object : View.OnTouchListener {
+            private val DRAG_THRESHOLD: Float = 10f
             private var offsetX: Float = 0f
             private var offsetY: Float = 0f
             private var initialTouchX: Float = 0f
             private var initialTouchY: Float = 0f
+            private var isClick: Boolean = false
 
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 when (event.action) {
@@ -50,20 +52,34 @@ class OverlayService : Service() {
                         initialTouchY = event.rawY
                         offsetX = params.x - event.rawX
                         offsetY = params.y - event.rawY
+                        view.isPressed = true
+                        isClick = true
                     }
 
                     MotionEvent.ACTION_MOVE -> {
-                        // Calculate the new position of the overlay based on the touch movement
-                        params.x = (event.rawX + offsetX).toInt()
-                        params.y = (event.rawY + offsetY).toInt()
+                        // Check if the finger has moved far enough to count as a drag
+                        if (isClick && (abs(event.rawX - initialTouchX) > DRAG_THRESHOLD || abs(
+                                event.rawY - initialTouchY
+                            ) > DRAG_THRESHOLD)
+                        ) {
+                            view.isPressed = false
+                            isClick = false
+                        }
 
-                        // Update the overlay position
-                        windowManager.updateViewLayout(overlayView, params)
+                        if (!isClick) {
+                            // Calculate the new position of the overlay based on the touch movement
+                            params.x = (event.rawX + offsetX).toInt()
+                            params.y = (event.rawY + offsetY).toInt()
+
+                            // Update the overlay position
+                            windowManager.updateViewLayout(overlayView, params)
+                        }
                     }
 
                     MotionEvent.ACTION_UP -> {
                         // Check if the touch event was a click
-                        if (abs(event.rawX - initialTouchX) < 10 && abs(event.rawY - initialTouchY) < 10) {
+                        if (isClick) {
+                            view.isPressed = false
                             // Perform click action here if needed
                             view.performClick()
                         }
