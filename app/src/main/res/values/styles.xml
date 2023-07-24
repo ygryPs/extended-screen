@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="OverlayButton" parent="Theme.AppCompat">
+        <item name="colorControlHighlight">#aaa</item>
+        <item name="colorButtonNormal">#4000</item>
+    </style>
+</resources>
