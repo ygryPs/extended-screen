@@ -3,10 +3,19 @@ package com.ygryps.extendedscreen
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 
 class AutoScrollService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    override fun onCreate() {
+        Log.d("autoScroll", "$this started")
+    }
+
+    override fun onDestroy() {
+        Log.d("autoScroll", "$this destroyed")
     }
 }

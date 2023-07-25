@@ -123,13 +123,13 @@ class OverlayService : Service() {
     private fun startAutoScroll() {
         val btnToggleAutoScroll = overlayView.findViewById<ImageButton>(R.id.btnToggleAutoScroll)
         btnToggleAutoScroll.setImageResource(android.R.drawable.ic_media_pause)
-        // TODO
+        startService(Intent(applicationContext, AutoScrollService::class.java))
     }
 
     private fun stopAutoScroll() {
         val btnToggleAutoScroll = overlayView.findViewById<ImageButton>(R.id.btnToggleAutoScroll)
         btnToggleAutoScroll.setImageResource(android.R.drawable.ic_media_play)
-        // TODO
+        stopService(Intent(applicationContext, AutoScrollService::class.java))
     }
 
 
