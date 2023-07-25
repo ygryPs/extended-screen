@@ -22,6 +22,7 @@ class OverlayService : Service() {
     }
 
     override fun onCreate() {
+        Log.d("OverlayService", "$this created")
         super.onCreate()
 
         // Create and set up the floating overlay layout
@@ -49,7 +50,7 @@ class OverlayService : Service() {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        Log.d("overlay press", "x: ${params.x}\t y: ${params.y}")
+                        Log.d("OverlayService", "pressed  - x: ${params.x}\t y: ${params.y}")
                         // Save the initial touch position
                         initialTouchX = event.rawX
                         initialTouchY = event.rawY
@@ -80,7 +81,7 @@ class OverlayService : Service() {
                     }
 
                     MotionEvent.ACTION_UP -> {
-                        Log.d("overlay release", "x: ${params.x}\t y: ${params.y}")
+                        Log.d("OverlayService", "released - x: ${params.x}\t y: ${params.y}")
                         // Check if the touch event was a click
                         if (isClick) {
                             view.isPressed = false
@@ -134,6 +135,7 @@ class OverlayService : Service() {
 
 
     override fun onDestroy() {
+        Log.d("OverlayService", "$this destroyed")
         super.onDestroy()
 
         if (autoScrollRunning) {
