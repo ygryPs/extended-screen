@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -47,6 +48,7 @@ class OverlayService : Service() {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
+                        Log.d("overlay press", "x: ${params.x}\t y: ${params.y}")
                         // Save the initial touch position
                         initialTouchX = event.rawX
                         initialTouchY = event.rawY
@@ -77,6 +79,7 @@ class OverlayService : Service() {
                     }
 
                     MotionEvent.ACTION_UP -> {
+                        Log.d("overlay release", "x: ${params.x}\t y: ${params.y}")
                         // Check if the touch event was a click
                         if (isClick) {
                             view.isPressed = false
