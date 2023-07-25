@@ -84,6 +84,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startOverlayService() {
-        startService(Intent(this, OverlayService::class.java))
+        startService(Intent(applicationContext, OverlayService::class.java))
     }
 }
