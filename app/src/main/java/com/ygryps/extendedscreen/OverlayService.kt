@@ -15,6 +15,7 @@ import kotlin.math.abs
 
 class OverlayService : Service() {
     private lateinit var overlayView: View
+    private var autoScrollRunning: Boolean = false
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -104,7 +105,13 @@ class OverlayService : Service() {
 
         btnToggleAutoScroll.setOnClickListener {
             // Handle the action to toggle auto scrolling
-            // Implement this functionality later
+            if (autoScrollRunning) {
+                stopAutoScroll()
+                autoScrollRunning = false
+            } else {
+                startAutoScroll()
+                autoScrollRunning = true
+            }
         }
 
         btnCloseOverlay.setOnClickListener {
@@ -113,9 +120,25 @@ class OverlayService : Service() {
         }
     }
 
+    private fun startAutoScroll() {
+        val btnToggleAutoScroll = overlayView.findViewById<ImageButton>(R.id.btnToggleAutoScroll)
+        btnToggleAutoScroll.setImageResource(android.R.drawable.ic_media_pause)
+        // TODO
+    }
+
+    private fun stopAutoScroll() {
+        val btnToggleAutoScroll = overlayView.findViewById<ImageButton>(R.id.btnToggleAutoScroll)
+        btnToggleAutoScroll.setImageResource(android.R.drawable.ic_media_play)
+        // TODO
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
 
+        if (autoScrollRunning) {
+            stopAutoScroll()
+        }
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         windowManager.removeView(overlayView)
     }

@@ -29,6 +29,6 @@
         android:layout_marginBottom="-3dp"
         android:contentDescription="@string/toggle_auto_scroll"
         android:padding="6dp"
-        android:src="@android:drawable/ic_media_pause"
+        android:src="@android:drawable/ic_media_play"
         android:theme="@style/OverlayButton" />
 </RelativeLayout>
