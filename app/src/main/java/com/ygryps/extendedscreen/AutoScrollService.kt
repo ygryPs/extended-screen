@@ -13,9 +13,11 @@ class AutoScrollService : Service() {
 
     override fun onCreate() {
         Log.d("AutoScrollService", "$this created")
+        super.onCreate()
     }
 
     override fun onDestroy() {
         Log.d("AutoScrollService", "$this destroyed")
+        super.onDestroy()
     }
 }
