@@ -5,25 +5,30 @@
     android:background="#8444"
     android:padding="2dp">
 
-    <!-- Add your UI elements here, e.g., two buttons -->
-    <ImageButton
-        android:id="@+id/btnToggleAutoScroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:background="@drawable/button_overlay"
-        android:contentDescription="@string/toggle_auto_scroll"
-        android:padding="4dp"
-        android:src="@android:drawable/ic_media_pause" />
-
     <ImageButton
         android:id="@+id/btnCloseOverlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnToggleAutoScroll"
-        android:layout_margin="2dp"
-        android:background="@drawable/button_overlay"
+        android:layout_marginStart="-3dp"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="-3dp"
+        android:layout_marginBottom="-3dp"
         android:contentDescription="@string/close_overlay"
-        android:padding="4dp"
-        android:src="@android:drawable/ic_delete" />
+        android:padding="6dp"
+        android:src="@android:drawable/ic_delete"
+        android:theme="@style/OverlayButton" />
+
+    <ImageButton
+        android:id="@+id/btnToggleAutoScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-3dp"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="-3dp"
+        android:layout_marginBottom="-3dp"
+        android:contentDescription="@string/toggle_auto_scroll"
+        android:padding="6dp"
+        android:src="@android:drawable/ic_media_pause"
+        android:theme="@style/OverlayButton" />
 </RelativeLayout>
