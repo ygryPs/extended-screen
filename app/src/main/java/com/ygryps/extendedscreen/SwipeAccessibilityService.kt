@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Path
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 
@@ -27,6 +28,7 @@ class SwipeAccessibilityService : AccessibilityService() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.i("SwipeAccessibilityService", "SwipeAccessibilityService created")
 
         // Register the broadcast receiver to listen for swipe requests
         val intentFilter = IntentFilter("com.ygryps.extendedscreen.ACTION_SWIPE")
@@ -35,6 +37,7 @@ class SwipeAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.i("SwipeAccessibilityService", "SwipeAccessibilityService destroyed")
 
         // Unregister the broadcast receiver when the service is destroyed
         unregisterReceiver(swipeReceiver)
