@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExtendedScreen"
         tools:targetApi="31">
-
+        <service
+            android:name=".SwipeAccessibilityService"
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name=".OverlayService"
             android:enabled="true"
@@ -34,7 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
