@@ -53,8 +53,8 @@ class AutoScrollService : Service() {
     }
 
     override fun onCreate() {
-        Log.d("AutoScrollService", "$this created")
         super.onCreate()
+        Log.i("AutoScrollService", "AutoScrollService created")
 
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
@@ -65,8 +65,8 @@ class AutoScrollService : Service() {
     }
 
     override fun onDestroy() {
-        Log.d("AutoScrollService", "$this destroyed")
         super.onDestroy()
+        Log.i("AutoScrollService", "AutoScrollService destroyed")
 
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.unregisterListener(sensorEventListener)
