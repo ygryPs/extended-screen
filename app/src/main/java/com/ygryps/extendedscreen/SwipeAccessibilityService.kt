@@ -2,6 +2,10 @@ package com.ygryps.extendedscreen
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Path
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +14,32 @@ import android.view.accessibility.AccessibilityNodeInfo
 
 class SwipeAccessibilityService : AccessibilityService() {
     private val mainHandler = Handler(Looper.getMainLooper())
+
+    private val swipeReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.ygryps.extendedscreen.ACTION_SWIPE") {
+                val displacementX = intent.getFloatExtra("displacementX", 0f)
+                val displacementY = intent.getFloatExtra("displacementY", 0f)
+                performSwipe(displacementX, displacementY)
+            }
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        // Register the broadcast receiver to listen for swipe requests
+        val intentFilter = IntentFilter("com.ygryps.extendedscreen.ACTION_SWIPE")
+        registerReceiver(swipeReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Unregister the broadcast receiver when the service is destroyed
+        unregisterReceiver(swipeReceiver)
+    }
+
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         // Handle accessibility events if needed

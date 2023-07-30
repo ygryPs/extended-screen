@@ -42,9 +42,17 @@ class AutoScrollService : Service() {
                 displacementX += velocityX * deltaTime
                 displacementY += velocityY * deltaTime
 
+                Log.d(
+                    "AutoScrollService",
+                    "DisplacementX: %.2f, DisplacementY: %.2f".format(displacementX, displacementY)
+                )
+
                 // Use the displacement values for your application logic
                 // For example, update the position of a view, etc.
-                Log.d("AutoScrollService", "DisplacementX: %.2f, DisplacementY: %.2f".format(displacementX, displacementY))
+                val intent = Intent("com.ygryps.extendedscreen.ACTION_SWIPE")
+                intent.putExtra("displacementX", displacementX)
+                intent.putExtra("displacementY", displacementY)
+                sendBroadcast(intent)
             }
         }
 
