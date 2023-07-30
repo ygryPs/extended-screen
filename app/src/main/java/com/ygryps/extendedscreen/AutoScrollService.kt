@@ -44,6 +44,7 @@ class AutoScrollService : Service() {
 
                 // Use the displacement values for your application logic
                 // For example, update the position of a view, etc.
+                Log.d("AutoScrollService", "DisplacementX: %.2f, DisplacementY: %.2f".format(displacementX, displacementY))
             }
         }
 
