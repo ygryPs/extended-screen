@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.IBinder
 import android.util.Log
+import kotlin.math.abs
 
 class AutoScrollService : Service() {
 
@@ -21,6 +22,8 @@ class AutoScrollService : Service() {
         private var velocityY = 0f
         private var displacementX = 0f
         private var displacementY = 0f
+        private var displacementX_prev = 0f
+        private var displacementY_prev = 0f
         private val SECS_PER_NS = 1.0f / 1_000_000_000.0f
         var lastTimestamp: Long = 0 // remember to initialize when registering listener
 
@@ -37,15 +40,24 @@ class AutoScrollService : Service() {
                 // Update velocity based on the acceleration
                 velocityX += accelerationX * deltaTime
                 velocityY += accelerationY * deltaTime
-
                 // Update displacement based on the velocity
                 displacementX += velocityX * deltaTime
                 displacementY += velocityY * deltaTime
 
                 // Use the displacement values for your application logic
                 // For example, update the position of a view, etc.
-                Log.d("AutoScrollService", "DisplacementX: %.2f, DisplacementY: %.2f".format(displacementX, displacementY))
-            }
+                if (abs(displacementX - displacementX_prev) > 0.1 || abs(displacementY - displacementY_prev) > 0.1) {
+                    Log.d(
+                        "AutoScrollService",
+                        "DisplacementX: %.2f, DisplacementY: %.2f".format(
+                            displacementX,
+                            displacementY
+                        )
+                    )
+                    displacementX_prev = displacementX
+                    displacementY_prev = displacementY
+                }
+                }
         }
 
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {

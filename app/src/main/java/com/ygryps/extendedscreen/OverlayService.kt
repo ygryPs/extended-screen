@@ -22,7 +22,7 @@ class OverlayService : Service() {
     }
 
     override fun onCreate() {
-        Log.d("OverlayService", "$this created")
+        Log.i("OverlayService", "$this created")
         super.onCreate()
 
         // Create and set up the floating overlay layout
@@ -135,7 +135,7 @@ class OverlayService : Service() {
 
 
     override fun onDestroy() {
-        Log.d("OverlayService", "$this destroyed")
+        Log.i("OverlayService", "$this destroyed")
         super.onDestroy()
 
         if (autoScrollRunning) {
