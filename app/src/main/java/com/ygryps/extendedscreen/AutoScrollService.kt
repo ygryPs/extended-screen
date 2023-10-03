@@ -1,21 +1,20 @@
 package com.ygryps.extendedscreen
 
-import android.app.Service
+import android.accessibilityservice.AccessibilityService
 import android.content.Context
-import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.IBinder
 import android.util.Log
+import android.view.accessibility.AccessibilityEvent
 import kotlin.math.abs
 
-class AutoScrollService : Service() {
+class AutoScrollService : AccessibilityService() {
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onInterrupt() {}
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 
     private val sensorEventListener = object : SensorEventListener {
         private var velocityX = 0f
@@ -48,16 +47,14 @@ class AutoScrollService : Service() {
                 // For example, update the position of a view, etc.
                 if (abs(displacementX - displacementX_prev) > 0.1 || abs(displacementY - displacementY_prev) > 0.1) {
                     Log.d(
-                        "AutoScrollService",
-                        "DisplacementX: %.2f, DisplacementY: %.2f".format(
-                            displacementX,
-                            displacementY
+                        "AutoScrollService", "DisplacementX: %.2f, DisplacementY: %.2f".format(
+                            displacementX, displacementY
                         )
                     )
                     displacementX_prev = displacementX
                     displacementY_prev = displacementY
                 }
-                }
+            }
         }
 
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
