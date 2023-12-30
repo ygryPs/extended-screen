@@ -42,19 +42,9 @@ class AutoScrollService : Service() {
                 displacementX += velocityX * deltaTime
                 displacementY += velocityY * deltaTime
 
-                /*
-                Log.d(
-                    "AutoScrollService",
-                    "DisplacementX: %.2f, DisplacementY: %.2f".format(displacementX, displacementY)
-                )
-                */
-
                 // Use the displacement values for your application logic
                 // For example, update the position of a view, etc.
-//                val intent = Intent("com.ygryps.extendedscreen.ACTION_SWIPE")
-//                intent.putExtra("displacementX", displacementX)
-//                intent.putExtra("displacementY", displacementY)
-//                sendBroadcast(intent)
+                Log.d("AutoScrollService", "DisplacementX: %.2f, DisplacementY: %.2f".format(displacementX, displacementY))
             }
         }
 
@@ -67,8 +57,6 @@ class AutoScrollService : Service() {
         super.onCreate()
         Log.i("AutoScrollService", "AutoScrollService created")
 
-        startService(Intent(applicationContext, SwipeAccessibilityService::class.java))
-
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
         sensorEventListener.lastTimestamp = System.nanoTime()
@@ -80,8 +68,6 @@ class AutoScrollService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         Log.i("AutoScrollService", "AutoScrollService destroyed")
-
-        stopService(Intent(applicationContext, SwipeAccessibilityService::class.java))
 
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.unregisterListener(sensorEventListener)
