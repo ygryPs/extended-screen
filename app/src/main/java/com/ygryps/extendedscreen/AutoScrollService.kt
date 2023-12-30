@@ -51,10 +51,10 @@ class AutoScrollService : Service() {
 
                 // Use the displacement values for your application logic
                 // For example, update the position of a view, etc.
-                val intent = Intent("com.ygryps.extendedscreen.ACTION_SWIPE")
-                intent.putExtra("displacementX", displacementX)
-                intent.putExtra("displacementY", displacementY)
-                sendBroadcast(intent)
+//                val intent = Intent("com.ygryps.extendedscreen.ACTION_SWIPE")
+//                intent.putExtra("displacementX", displacementX)
+//                intent.putExtra("displacementY", displacementY)
+//                sendBroadcast(intent)
             }
         }
 

@@ -22,7 +22,7 @@ class OverlayService : Service() {
     }
 
     override fun onCreate() {
-        Log.d("OverlayService", "$this created")
+        Log.i("OverlayService", "OverlayService created")
         super.onCreate()
 
         // Create and set up the floating overlay layout
@@ -88,6 +88,12 @@ class OverlayService : Service() {
                             // Perform click action here if needed
                             view.performClick()
                         }
+
+                        val intent = Intent("com.ygryps.extendedscreen.ACTION_SWIPE")
+                        intent.putExtra("displacementX", 100.0)
+                        intent.putExtra("displacementY", 200.0)
+                        sendBroadcast(intent)
+
                     }
                 }
                 return true
@@ -135,7 +141,7 @@ class OverlayService : Service() {
 
 
     override fun onDestroy() {
-        Log.d("OverlayService", "$this destroyed")
+        Log.i("OverlayService", "OverlayService destroyed")
         super.onDestroy()
 
         if (autoScrollRunning) {

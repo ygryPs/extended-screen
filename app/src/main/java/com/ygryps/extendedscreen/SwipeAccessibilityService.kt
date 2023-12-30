@@ -11,7 +11,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityNodeInfo
 
 class SwipeAccessibilityService : AccessibilityService() {
     private val mainHandler = Handler(Looper.getMainLooper())
@@ -28,7 +27,7 @@ class SwipeAccessibilityService : AccessibilityService() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.i("SwipeAccessibilityService", "SwipeAccessibilityService created")
+        Log.i("SwipeService", "SwipeAccessibilityService created")
 
         // Register the broadcast receiver to listen for swipe requests
         val intentFilter = IntentFilter("com.ygryps.extendedscreen.ACTION_SWIPE")
@@ -37,12 +36,11 @@ class SwipeAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("SwipeAccessibilityService", "SwipeAccessibilityService destroyed")
+        Log.i("SwipeService", "SwipeAccessibilityService destroyed")
 
         // Unregister the broadcast receiver when the service is destroyed
         unregisterReceiver(swipeReceiver)
     }
-
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         // Handle accessibility events if needed
@@ -53,13 +51,14 @@ class SwipeAccessibilityService : AccessibilityService() {
     }
 
     fun performSwipe(displacementX: Float, displacementY: Float) {
+        Log.d("SwipeService", "Sending swipe")
         val swipeDuration = 100L // Set the desired duration for the swipe in milliseconds
 
         // Calculate the start and end points for the swipe based on displacement
-        val startX = 200 // Set the X coordinate for the start point
-        val startY = 200 // Set the Y coordinate for the start point
-        val endX = startX + (displacementX * 100).toInt() // Adjust the multiplier to control the distance of the swipe
-        val endY = startY + (displacementY * 100).toInt()
+        val startX = 500 // Set the X coordinate for the start point
+        val startY = 1000 // Set the Y coordinate for the start point
+        val endX = startX + 200 + displacementX.toInt() // Adjust the multiplier to control the distance of the swipe
+        val endY = startY + 400 + displacementY.toInt()
 
         // Create a Path representing the swipe gesture
         val path = Path()
